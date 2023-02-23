@@ -1,0 +1,15 @@
+HELLOMOD_VERSION=1.0
+HELLOMOD_SITE=$(realpath $(HELLOMOD_PKGDIR))
+HELLOMOD_SITE_METHOD=local
+HELLOMOD_LICENSE = GPLv2
+HELLOMOD_LICENSE_FILES = COPYING
+HELLOMOD_MODULE_MAKE_OPTS = \
+        CONFIG_DUMMY1= \
+        CONFIG_DUMMY2=y
+ 
+define KERNEL_MODULE_BUILD_CMDS
+        $(MAKE) -C '$(@D)' LINUX_DIR='$(LINUX_DIR)' CC='$(TARGET_CC)' LD='$(TARGET_LD)' modules
+endef
+ 
+$(eval $(kernel-module))
+$(eval $(generic-package))
